@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Easy_Dorking</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            width: 300px;
+            max-width: 80%;
+            margin-bottom: 20px;
+        }
+
+        .dork-container {
+            background-color: #333;
+            margin: 15px auto;
+            padding: 15px;
+            border-radius: 8px;
+            width: 80%;
+            text-align: center;
+        }
+
+        a {
+            color: #00aaff;
+            text-decoration: none;
+            font-size: 18px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        p {
+            margin: 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Google Dorks Finder</h1>
+    <input type="text" id="domain" placeholder="Enter domain (e.g., example.com)" oninput="updateDorks()" />
+
+    <div id="dorkList"></div>
+
+    <script>
+        const dorks = [
+            {
+                dork: "site:{domain} -www -shop -share -ir -mfa",
+                description: "Broad domain search with negative filters"
+            },
+            {
+                dork: "site:{domain} ext:php inurl:?",
+                description: "Search for PHP files with parameters"
+            },
+            {
+                dork: "site:{domain} inurl:api | site:*/rest | site:*/v1 | site:*/v2 | site:*/v3",
+                description: "Search for API Endpoints"
+            },
+            {
+                dork: "site:\"{domain}\" ext:log | ext:txt | ext:conf | ext:cnf | ext:ini | ext:env | ext:sh | ext:bak | ext:backup | ext:swp | ext:old | ext:~ | ext:git | ext:svn | ext:htpasswd | ext:htaccess | ext:json",
+                description: "Search for Juicy Extensions"
+            },
+            {
+                dork: "inurl:conf | inurl:env | inurl:cgi | inurl:bin | inurl:etc | inurl:root | inurl:sql | inurl:backup | inurl:admin | inurl:php site:{domain}",
+                description: "Search for high probability inurl keywords"
+            },
+            {
+                dork: "inurl:\"error\" | intitle:\"exception\" | intitle:\"failure\" | intitle:\"server at\" | inurl:exception | \"database error\" | \"SQL syntax\" | \"undefined index\" | \"unhandled exception\" | \"stack trace\" site:{domain}",
+                description: "Search for server errors"
+            },
+            {
+                dork: "inurl:q= | inurl:s= | inurl:search= | inurl:query= | inurl:keyword= | inurl:lang= inurl:& site:{domain}",
+                description: "Search for XSS prone parameters"
+            },
+            {
+                dork: "inurl:url= | inurl:return= | inurl:next= | inurl:redirect= | inurl:redir= | inurl:ret= | inurl:r2= | inurl:page= inurl:& inurl:http site:{domain}",
+                description: "Search for Open Redirect prone parameters"
+            },
+            {
+                dork: "inurl:id= | inurl:pid= | inurl:category= | inurl:cat= | inurl:action= | inurl:sid= | inurl:dir= inurl:& site:{domain}",
+                description: "Search for SQLi prone parameters"
+            },
+            {
+                dork: "inurl:http | inurl:url= | inurl:path= | inurl:dest= | inurl:html= | inurl:data= | inurl:domain= | inurl:page= inurl:& site:{domain}",
+                description: "Search for SSRF prone parameters"
+            },
+            {
+                dork: "inurl:include | inurl:dir | inurl:detail= | inurl:file= | inurl:folder= | inurl:inc= | inurl:locate= | inurl:doc= | inurl:conf= inurl:& site:{domain}",
+                description: "Search for LFI prone parameters"
+            },
+            {
+                dork: "inurl:cmd | inurl:exec= | inurl:query= | inurl:code= | inurl:do= | inurl:run= | inurl:read= | inurl:ping= inurl:& site:{domain}",
+                description: "Search for RCE prone parameters"
+            },
+            {
+                dork: "site:{domain} \"choose file\"",
+                description: "Search for file upload endpoints"
+            },
+            {
+                dork: "inurl:apidocs | inurl:api-docs | inurl:swagger | inurl:api-explorer site:{domain}",
+                description: "Search for API documentation pages"
+            },
+            {
+                dork: "inurl:login | inurl:signin | intitle:login | intitle:signin | inurl:secure site:{domain}",
+                description: "Search for login pages"
+            },
+            {
+                dork: "inurl:test | inurl:env | inurl:dev | inurl:staging | inurl:sandbox | inurl:debug | inurl:temp | inurl:internal | inurl:demo site:{domain}",
+                description: "Search for test environments"
+            },
+            {
+                dork: "site:{domain} ext:txt | ext:pdf | ext:xml | ext:xls | ext:xlsx | ext:ppt | ext:pptx | ext:doc | ext:docx intext:\"confidential\" | intext:\"Not for Public Release\" | intext:\"internal use only\" | intext:\"do not distribute\"",
+                description: "Search for sensitive documents"
+            },
+            {
+                dork: "inurl:email= | inurl:phone= | inurl:password= | inurl:secret= inurl:& site:{domain}",
+                description: "Search for sensitive parameters"
+            },
+            {
+                dork: "inurl:/content/usergenerated | inurl:/content/dam | inurl:/jcr:content | inurl:/libs/granite | inurl:/etc/clientlibs | inurl:/content/geometrixx | inurl:/bin/wcm | inurl:/crx/de site:{domain}",
+                description: "Search for Adobe Experience Manager (AEM) endpoints"
+            },
+            {
+                dork: "site:openbugbounty.org inurl:reports intext:\"{domain}\"",
+                description: "Search for disclosed XSS and open redirects"
+            },
+            {
+                dork: "site:groups.google.com \"{domain}\"",
+                description: "Search for mentions in Google Groups"
+            },
+            {
+                dork: "site:pastebin.com \"{domain}\" | site:jsfiddle.net \"{domain}\" | site:codebeautify.org \"{domain}\" | site:codepen.io \"{domain}\"",
+                description: "Search for code leaks"
+            },
+            {
+                dork: "site:s3.amazonaws.com \"{domain}\" | site:blob.core.windows.net \"{domain}\" | site:googleapis.com \"{domain}\" | site:drive.google.com \"{domain}\" | site:dev.azure.com \"{domain}\" | site:onedrive.live.com \"{domain}\" | site:digitaloceanspaces.com \"{domain}\" | site:sharepoint.com \"{domain}\" | site:s3-external-1.amazonaws.com \"{domain}\" | site:s3.dualstack.us-east-1.amazonaws.com \"{domain}\" | site:dropbox.com/s \"{domain}\" | site:box.com/s \"{domain}\" | site:docs.google.com inurl:\"/d/\" \"{domain}\"",
+                description: "Search for exposed files in cloud storage"
+            },
+            {
+                dork: "site:jfrog.io \"{domain}\"",
+                description: "Search for exposed JFrog Artifactory files"
+            },
+            {
+                dork: "site:firebaseio.com \"{domain}\"",
+                description: "Search for exposed Firebase data"
+            },
+            {
+                dork: "\"submit vulnerability report\" | \"powered by bugcrowd\" | \"powered by hackerone\" site:*/security.txt \"bounty\"",
+                description: "Search for Bug Bounty programs and VDPs"
+            },
+            {
+                dork: "site:*/server-status apache",
+                description: "Search for exposed Apache server status pages"
+            },
+            {
+                dork: "inurl:/wp-admin/admin-ajax.php",
+                description: "Search for WordPress admin-ajax endpoints"
+            },
+            {
+                dork: "intext:\"Powered by\" & intext:Drupal & inurl:user",
+                description: "Search for Drupal installations"
+            },
+            {
+                dork: "site:*/joomla/login",
+                description: "Search for Joomla login portals"
+            }
+        ];
+
+        function updateDorks() {
+            const domain = document.getElementById("domain").value.trim();
+            const dorkList = document.getElementById("dorkList");
+            dorkList.innerHTML = "";
+
+            if (!domain) {
+                return;
+            }
+
+            dorks.forEach(item => {
+                const div = document.createElement("div");
+                div.className = "dork-container";
+
+                const dorkQuery = item.dork.replace(/{domain}/g, domain);
+                const dorkLink = document.createElement("a");
+                dorkLink.href = `https://www.google.com/search?q=${encodeURIComponent(dorkQuery)}`;
+                dorkLink.target = "_blank";
+                dorkLink.textContent = dorkQuery;
+
+                const desc = document.createElement("p");
+                desc.textContent = item.description;
+
+                div.appendChild(dorkLink);
+                div.appendChild(desc);
+                dorkList.appendChild(div);
+            });
+        }
+
+    </script>
+</body>
+
+</html>
