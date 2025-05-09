@@ -116,7 +116,7 @@
                 description: "Search for file upload endpoints"
             },
             {
-                dork: "inurl:apidocs | inurl:api-docs | inurl:swagger | inurl:api-explorer site:{domain}",
+                dork: "site:chime.com (inurl:apidocs OR inurl:api-docs OR inurl:swagger OR inurl:api-explorer OR inurl:api-doc OR inurl:openapi)",
                 description: "Search for API documentation pages"
             },
             {
@@ -128,7 +128,7 @@
                 description: "Search for test environments"
             },
             {
-                dork: "site:{domain} ext:txt | ext:pdf | ext:xml | ext:xls | ext:xlsx | ext:ppt | ext:pptx | ext:doc | ext:docx intext:\"confidential\" | intext:\"Not for Public Release\" | intext:\"internal use only\" | intext:\"do not distribute\"",
+                dork: "site:chime.com (ext:txt OR ext:pdf OR ext:xml OR ext:xls OR ext:xlsx OR ext:ppt OR ext:pptx OR ext:doc OR ext:docx) (intext:"confidential" OR intext:"Not for Public Release" OR intext:"internal use only" OR intext:"do not distribute")",
                 description: "Search for sensitive documents"
             },
             {
@@ -160,7 +160,7 @@
                 description: "Search for exposed JFrog Artifactory files"
             },
             {
-                dork: "site:firebaseio.com \"{domain}\"",
+                dork: "site:.firebaseio.com \"{domain}\"",
                 description: "Search for exposed Firebase data"
             },
             {
