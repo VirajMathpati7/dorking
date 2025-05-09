@@ -172,11 +172,11 @@
                 description: "Search for exposed Apache server status pages"
             },
             {
-                dork: "inurl:/wp-admin/admin-ajax.php",
+                dork: "inurl:/wp-admin/admin-ajax.php site:{domain}",
                 description: "Search for WordPress admin-ajax endpoints"
             },
             {
-                dork: "intext:\"Powered by\" & intext:Drupal & inurl:user",
+                dork: "intext:\"Powered by\" & intext:Drupal & inurl:user site:{domain}",
                 description: "Search for Drupal installations"
             },
             {
