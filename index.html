@@ -64,196 +64,169 @@
     <script>
         const dorks = [
   {
-    "dork": "site:chime.com ext:php inurl:?",
-    "description": "Search for PHP files on chime.com with parameters (potential for RCE, LFI, SQLi)"
+    "dork": "site:{domain} ext:php inurl:?",
+    "description": "Search for PHP files on {domain} with parameters (potential for RCE, LFI, SQLi)"
   },
   {
-    "dork": "site:chime.com (inurl:api | inurl:/rest | inurl:/v1 | inurl:/v2 | inurl:/v3)",
-    "description": "Search for API endpoints across chime.com and common REST versions"
+    "dork": "site:{domain} (inurl:api | inurl:/rest | inurl:/v1 | inurl:/v2 | inurl:/v3)",
+    "description": "Search for API endpoints across {domain} and common REST versions"
   },
   {
-    "dork": "site:chime.com (ext:log | ext:txt | ext:conf | ext:cnf | ext:ini | ext:env | ext:sh | ext:bak | ext:backup | ext:swp | ext:old | ext:git | ext:svn | ext:htpasswd | ext:htaccess | ext:json)",
-    "description": "Search for juicy config/log/backup files exposed on chime.com"
+    "dork": "site:{domain} (ext:log | ext:txt | ext:conf | ext:cnf | ext:ini | ext:env | ext:sh | ext:bak | ext:backup | ext:swp | ext:old | ext:git | ext:svn | ext:htpasswd | ext:htaccess | ext:json)",
+    "description": "Search for juicy config/log/backup files exposed on {domain}"
   },
   {
-    "dork": "site:chime.com (inurl:conf | inurl:env | inurl:cgi | inurl:bin | inurl:etc | inurl:root | inurl:sql | inurl:backup | inurl:admin | inurl:php)",
-    "description": "Search for URLs with high % of sensitive keywords on chime.com"
+    "dork": "site:{domain} (inurl:conf | inurl:env | inurl:cgi | inurl:bin | inurl:etc | inurl:root | inurl:sql | inurl:backup | inurl:admin | inurl:php)",
+    "description": "Search for URLs with high % of sensitive keywords on {domain}"
   },
   {
-    "dork": "site:chime.com (inurl:error | intitle:exception | intitle:failure | intitle:\"server at\" | inurl:exception | \"database error\" | \"SQL syntax\" | \"undefined index\" | \"unhandled exception\" | \"stack trace\")",
-    "description": "Search for server error messages and debug info on chime.com"
+    "dork": "site:{domain} (inurl:error | intitle:exception | intitle:failure | intitle:\"server at\" | inurl:exception | \"database error\" | \"SQL syntax\" | \"undefined index\" | \"unhandled exception\" | \"stack trace\")",
+    "description": "Search for server error messages and debug info on {domain}"
   },
   {
-    "dork": "site:chime.com (inurl:q= | inurl:s= | inurl:search= | inurl:query= | inurl:keyword= | inurl:lang=) inurl:&",
-    "description": "Find pages with XSS-prone parameters on chime.com"
+    "dork": "site:{domain} (inurl:q= | inurl:s= | inurl:search= | inurl:query= | inurl:keyword= | inurl:lang=) inurl:&",
+    "description": "Find pages with XSS-prone parameters on {domain}"
   },
   {
-    "dork": "site:chime.com (inurl:url= | inurl:return= | inurl:next= | inurl:redirect= | inurl:redir= | inurl:ret= | inurl:r2= | inurl:page=) inurl:& inurl:http",
-    "description": "Search for open redirect-prone parameters on chime.com"
+    "dork": "site:{domain} (inurl:url= | inurl:return= | inurl:next= | inurl:redirect= | inurl:redir= | inurl:ret= | inurl:r2= | inurl:page=) inurl:& inurl:http",
+    "description": "Search for open redirect-prone parameters on {domain}"
   },
   {
-    "dork": "site:chime.com (inurl:id= | inurl:pid= | inurl:category= | inurl:cat= | inurl:action= | inurl:sid= | inurl:dir=) inurl:&",
-    "description": "Find SQL injection-prone parameters on chime.com"
+    "dork": "site:{domain} (inurl:id= | inurl:pid= | inurl:category= | inurl:cat= | inurl:action= | inurl:sid= | inurl:dir=) inurl:&",
+    "description": "Find SQL injection-prone parameters on {domain}"
   },
   {
-    "dork": "site:chime.com (inurl:http | inurl:url= | inurl:path= | inurl:dest= | inurl:html= | inurl:data= | inurl:domain= | inurl:page=) inurl:&",
-    "description": "Search for SSRF-prone parameters on chime.com"
+    "dork": "site:{domain} (inurl:http | inurl:url= | inurl:path= | inurl:dest= | inurl:html= | inurl:data= | inurl:domain= | inurl:page=) inurl:&",
+    "description": "Search for SSRF-prone parameters on {domain}"
   },
   {
-    "dork": "site:chime.com (inurl:include | inurl:dir | inurl:detail= | inurl:file= | inurl:folder= | inurl:inc= | inurl:locate= | inurl:doc= | inurl:conf=) inurl:&",
-    "description": "Search for LFI-prone parameters on chime.com"
+    "dork": "site:{domain} (inurl:include | inurl:dir | inurl:detail= | inurl:file= | inurl:folder= | inurl:inc= | inurl:locate= | inurl:doc= | inurl:conf=) inurl:&",
+    "description": "Search for LFI-prone parameters on {domain}"
   },
   {
-    "dork": "site:chime.com (inurl:cmd | inurl:exec= | inurl:query= | inurl:code= | inurl:do= | inurl:run= | inurl:read= | inurl:ping=) inurl:&",
-    "description": "Search for RCE-prone parameters on chime.com"
+    "dork": "site:{domain} (inurl:cmd | inurl:exec= | inurl:query= | inurl:code= | inurl:do= | inurl:run= | inurl:read= | inurl:ping=) inurl:&",
+    "description": "Search for RCE-prone parameters on {domain}"
   },
   {
-    "dork": "site:chime.com \"choose file\"",
-    "description": "Search for file upload endpoints on chime.com"
+    "dork": "site:{domain} \"choose file\"",
+    "description": "Search for file upload endpoints on {domain}"
   },
   {
-    "dork": "site:chime.com (inurl:apidocs | inurl:api-docs | inurl:swagger | inurl:api-explorer)",
-    "description": "Search for exposed API documentation pages on chime.com"
+    "dork": "site:{domain} (inurl:apidocs | inurl:api-docs | inurl:swagger | inurl:api-explorer)",
+    "description": "Search for exposed API documentation pages on {domain}"
   },
   {
-    "dork": "site:chime.com (inurl:login | inurl:signin | intitle:login | intitle:signin | inurl:secure)",
-    "description": "Find login pages on chime.com"
+    "dork": "site:{domain} (inurl:login | inurl:signin | intitle:login | intitle:signin | inurl:secure)",
+    "description": "Find login pages on {domain}"
   },
   {
-    "dork": "site:chime.com (inurl:test | inurl:env | inurl:dev | inurl:staging | inurl:sandbox | inurl:debug | inurl:temp | inurl:internal | inurl:demo)",
-    "description": "Search for test/dev/staging environments on chime.com"
+    "dork": "site:{domain} (inurl:test | inurl:env | inurl:dev | inurl:staging | inurl:sandbox | inurl:debug | inurl:temp | inurl:internal | inurl:demo)",
+    "description": "Search for test/dev/staging environments on {domain}"
   },
   {
-    "dork": "site:chime.com (ext:txt | ext:pdf | ext:xml | ext:xls | ext:xlsx | ext:ppt | ext:pptx | ext:doc | ext:docx) (intext:\"confidential\" | intext:\"Not for Public Release\" | intext:\"internal use only\" | intext:\"do not distribute\")",
-    "description": "Search for sensitive documents (marked confidential) on chime.com"
+    "dork": "site:{domain} (ext:txt | ext:pdf | ext:xml | ext:xls | ext:xlsx | ext:ppt | ext:pptx | ext:doc | ext:docx) (intext:\"confidential\" | intext:\"Not for Public Release\" | intext:\"internal use only\" | intext:\"do not distribute\")",
+    "description": "Search for sensitive documents (marked confidential) on {domain}"
   },
   {
-    "dork": "site:chime.com (inurl:email= | inurl:phone= | inurl:password= | inurl:secret=) inurl:&",
-    "description": "Search for sensitive parameters (email, password, secret) on chime.com"
+    "dork": "site:{domain} (inurl:email= | inurl:phone= | inurl:password= | inurl:secret=) inurl:&",
+    "description": "Search for sensitive parameters (email, password, secret) on {domain}"
   },
   {
-    "dork": "site:chime.com (inurl:/content/usergenerated | inurl:/content/dam | inurl:/jcr:content | inurl:/libs/granite | inurl:/etc/clientlibs | inurl:/content/geometrixx | inurl:/bin/wcm | inurl:/crx/de)",
-    "description": "Search for Adobe Experience Manager (AEM) endpoints on chime.com"
+    "dork": "site:{domain} (inurl:/content/usergenerated | inurl:/content/dam | inurl:/jcr:content | inurl:/libs/granite | inurl:/etc/clientlibs | inurl:/content/geometrixx | inurl:/bin/wcm | inurl:/crx/de)",
+    "description": "Search for Adobe Experience Manager (AEM) endpoints on {domain}"
   },
   {
-    "dork": "site:openbugbounty.org inurl:reports intext:\"chime.com\"",
-    "description": "Find disclosed XSS and open redirect reports for chime.com"
+    "dork": "site:openbugbounty.org inurl:reports intext:\"{domain}\"",
+    "description": "Find disclosed XSS and open redirect reports for {domain}"
   },
   {
-    "dork": "site:groups.google.com \"chime.com\"",
-    "description": "Search Google Groups for posts mentioning chime.com (potential leaks)"
+    "dork": "site:groups.google.com \"{domain}\"",
+    "description": "Search Google Groups for posts mentioning {domain} (potential leaks)"
   },
   {
-    "dork": "site:pastebin.com \"chime.com\"",
-    "description": "Search Pastebin for code leaks mentioning chime.com"
+    "dork": "site:pastebin.com \"{domain}\"",
+    "description": "Search Pastebin for code leaks mentioning {domain}"
   },
   {
-    "dork": "site:jsfiddle.net \"chime.com\"",
-    "description": "Search JSFiddle for code snippets mentioning chime.com"
+    "dork": "site:jsfiddle.net \"{domain}\"",
+    "description": "Search JSFiddle for code snippets mentioning {domain}"
   },
   {
-    "dork": "site:codebeautify.org \"chime.com\"",
-    "description": "Search CodeBeautify for code leaks mentioning chime.com"
+    "dork": "site:codebeautify.org \"{domain}\"",
+    "description": "Search CodeBeautify for code leaks mentioning {domain}"
   },
   {
-    "dork": "site:codepen.io \"chime.com\"",
-    "description": "Search CodePen for front-end code leaks mentioning chime.com"
+    "dork": "site:codepen.io \"{domain}\"",
+    "description": "Search CodePen for front-end code leaks mentioning {domain}"
   },
   {
-    "dork": "site:s3.amazonaws.com \"chime.com\"",
-    "description": "Search for Chime-related files publicly exposed on Amazon S3 buckets"
+    "dork": "site:s3.amazonaws.com \"{domain}\"",
+    "description": "Search for {domain}-related files publicly exposed on Amazon S3 buckets"
   },
   {
-    "dork": "site:blob.core.windows.net \"chime.com\"",
-    "description": "Find files hosted in Azure Blob Storage mentioning Chime"
+    "dork": "site:blob.core.windows.net \"{domain}\"",
+    "description": "Find files hosted in Azure Blob Storage mentioning {domain}"
   },
   {
-    "dork": "site:googleapis.com \"chime.com\"",
-    "description": "Search for exposed Google Cloud assets related to Chime"
+    "dork": "site:googleapis.com \"{domain}\"",
+    "description": "Search for exposed Google Cloud assets related to {domain}"
   },
   {
-    "dork": "site:drive.google.com \"chime.com\"",
-    "description": "Look for public Google Drive files referencing Chime"
+    "dork": "site:drive.google.com \"{domain}\"",
+    "description": "Look for public Google Drive files referencing {domain}"
   },
   {
-    "dork": "site:dev.azure.com \"chime.com\"",
-    "description": "Find Azure DevOps repositories, pipelines or leaks connected to Chime"
+    "dork": "site:dev.azure.com \"{domain}\"",
+    "description": "Find Azure DevOps repositories, pipelines or leaks connected to {domain}"
   },
   {
-    "dork": "site:onedrive.live.com \"chime.com\"",
-    "description": "Search OneDrive for public Chime documents or files"
+    "dork": "site:onedrive.live.com \"{domain}\"",
+    "description": "Search OneDrive for public {domain} documents or files"
   },
   {
-    "dork": "site:digitaloceanspaces.com \"chime.com\"",
-    "description": "Discover files exposed on DigitalOcean Spaces mentioning Chime"
+    "dork": "site:digitaloceanspaces.com \"{domain}\"",
+    "description": "Discover files exposed on DigitalOcean Spaces mentioning {domain}"
   },
   {
-    "dork": "site:sharepoint.com \"chime.com\"",
-    "description": "Find internal SharePoint sites or documents about Chime"
+    "dork": "site:sharepoint.com \"{domain}\"",
+    "description": "Find internal SharePoint sites or documents about {domain}"
   },
   {
-    "dork": "site:s3-external-1.amazonaws.com \"chime.com\"",
-    "description": "Search older S3 bucket URLs that might be publicly accessible with Chime data"
+    "dork": "site:s3-external-1.amazonaws.com \"{domain}\"",
+    "description": "Search older S3 bucket URLs that might be publicly accessible with {domain} data"
   },
   {
-    "dork": "site:s3.dualstack.us-east-1.amazonaws.com \"chime.com\"",
-    "description": "Find dualstack AWS S3 endpoints leaking Chime-related content"
+    "dork": "site:s3.dualstack.us-east-1.amazonaws.com \"{domain}\"",
+    "description": "Find dualstack AWS S3 endpoints leaking {domain}-related content"
   },
   {
-    "dork": "site:dropbox.com/s \"chime.com\"",
-    "description": "Search for public Dropbox shares mentioning Chime"
-  },
-  {
-    "dork": "site:box.com/s \"chime.com\"",
-    "description": "Look for public Box.com file shares related to Chime"
-  },
-  {
-    "dork": "site:docs.google.com inurl:\"/d/\" \"chime.com\"",
-    "description": "Find public Google Docs (documents, spreadsheets, slides) that mention Chime"
-  },
-  {
-    "dork": "site:jfrog.io \"chime.com\"",
-    "description": "Search JFrog Artifactory for artifacts mentioning Chime"
-  },
-  {
-    "dork": "site:firebaseio.com \"chime.com\"",
-    "description": "Search Firebase storage for leaks mentioning Chime"
-  },
-  {
-    "dork": "site:* /security.txt \"bounty\"",
-    "description": "Find public security.txt files mentioning bounty programs"
+    "dork": "site:dropbox.com/s \"{domain}\"",
+    "description": "Search for public Dropbox shares mentioning {domain}"
   }
-]
-;
+        ];
 
         function updateDorks() {
-            const domain = document.getElementById("domain").value.trim();
-            const dorkList = document.getElementById("dorkList");
-            dorkList.innerHTML = "";
+            const domainInput = document.getElementById('domain').value.trim();
+            const dorkListDiv = document.getElementById('dorkList');
+            dorkListDiv.innerHTML = '';
 
-            if (!domain) {
-                return;
-            }
+            if (domainInput === '') return;
 
             dorks.forEach(item => {
-                const div = document.createElement("div");
-                div.className = "dork-container";
-
-                const dorkQuery = item.dork.replace(/{domain}/g, domain);
-                const dorkLink = document.createElement("a");
-                dorkLink.href = `https://www.google.com/search?q=${encodeURIComponent(dorkQuery)}`;
-                dorkLink.target = "_blank";
-                dorkLink.textContent = dorkQuery;
-
-                const desc = document.createElement("p");
-                desc.textContent = item.description;
-
-                div.appendChild(dorkLink);
-                div.appendChild(desc);
-                dorkList.appendChild(div);
+                const dorkText = item.dork.replace(/{domain}/g, domainInput);
+                const container = document.createElement('div');
+                container.className = 'dork-container';
+                const link = document.createElement('a');
+                link.href = `https://www.google.com/search?q=${encodeURIComponent(dorkText)}`;
+                link.target = '_blank';
+                link.textContent = dorkText;
+                const description = document.createElement('p');
+                description.textContent = item.description;
+                container.appendChild(link);
+                container.appendChild(description);
+                dorkListDiv.appendChild(container);
             });
         }
-
     </script>
 </body>
 
