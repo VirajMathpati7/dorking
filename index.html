@@ -84,27 +84,27 @@
     "description": "Search for server error messages and debug info on {domain}"
   },
   {
-    "dork": "site:{domain} (inurl:q= | inurl:s= | inurl:search= | inurl:query= | inurl:keyword= | inurl:lang=) inurl:&",
+    "dork": "site:{domain} (inurl:q= | inurl:s= | inurl:search= | inurl:query= | inurl:keyword= | inurl:lang=)",
     "description": "Find pages with XSS-prone parameters on {domain}"
   },
   {
-    "dork": "site:{domain} (inurl:url= | inurl:return= | inurl:next= | inurl:redirect= | inurl:redir= | inurl:ret= | inurl:r2= | inurl:page=) inurl:& inurl:http",
+    "dork": "site:{domain} (inurl:url= | inurl:return= | inurl:next= | inurl:redirect= | inurl:redir= | inurl:ret= | inurl:r2= | inurl:page=) ",
     "description": "Search for open redirect-prone parameters on {domain}"
   },
   {
-    "dork": "site:{domain} (inurl:id= | inurl:pid= | inurl:category= | inurl:cat= | inurl:action= | inurl:sid= | inurl:dir=) inurl:&",
+    "dork": "site:{domain} (inurl:id= | inurl:pid= | inurl:category= | inurl:cat= | inurl:action= | inurl:sid= | inurl:dir=)",
     "description": "Find SQL injection-prone parameters on {domain}"
   },
   {
-    "dork": "site:{domain} (inurl:http | inurl:url= | inurl:path= | inurl:dest= | inurl:html= | inurl:data= | inurl:domain= | inurl:page=) inurl:&",
+    "dork": "site:{domain} (inurl:http | inurl:url= | inurl:path= | inurl:dest= | inurl:html= | inurl:data= | inurl:domain= | inurl:page=)",
     "description": "Search for SSRF-prone parameters on {domain}"
   },
   {
-    "dork": "site:{domain} (inurl:include | inurl:dir | inurl:detail= | inurl:file= | inurl:folder= | inurl:inc= | inurl:locate= | inurl:doc= | inurl:conf=) inurl:&",
+    "dork": "site:{domain} (inurl:include | inurl:dir | inurl:detail= | inurl:file= | inurl:folder= | inurl:inc= | inurl:locate= | inurl:doc= | inurl:conf=)",
     "description": "Search for LFI-prone parameters on {domain}"
   },
   {
-    "dork": "site:{domain} (inurl:cmd | inurl:exec= | inurl:query= | inurl:code= | inurl:do= | inurl:run= | inurl:read= | inurl:ping=) inurl:&",
+    "dork": "site:{domain} (inurl:cmd | inurl:exec= | inurl:query= | inurl:code= | inurl:do= | inurl:run= | inurl:read= | inurl:ping=) ",
     "description": "Search for RCE-prone parameters on {domain}"
   },
   {
@@ -124,11 +124,14 @@
     "description": "Search for test/dev/staging environments on {domain}"
   },
   {
-    "dork": "site:{domain} (ext:txt | ext:pdf | ext:xml | ext:xls | ext:xlsx | ext:ppt | ext:pptx | ext:doc | ext:docx) (intext:\"confidential\" | intext:\"Not for Public Release\" | intext:\"internal use only\" | intext:\"do not distribute\")",
+    "dork": "site:{domain} (ext:txt | ext:pdf | ext:xml | ext:xls | ext:xlsx | ext:ppt | ext:pptx | ext:doc | ext:docx)",
     "description": "Search for sensitive documents (marked confidential) on {domain}"
   },
   {
-    "dork": "site:{domain} (inurl:email= | inurl:phone= | inurl:password= | inurl:secret=) inurl:&",
+    "dork": "site:{domain}  (intext:\"confidential\" | intext:\"Not for Public Release\" | intext:\"internal use only\" | intext:\"do not distribute\")"
+  },
+  {
+    "dork": "site:{domain} (inurl:email= | inurl:phone= | inurl:password= | inurl:secret=) ",
     "description": "Search for sensitive parameters (email, password, secret) on {domain}"
   },
   {
